@@ -109,7 +109,9 @@ app.post('/createCsv', async (req, res) => {
     const csvData = parser.parse(data);
     const uploadResponse = await uploadFileToAppwrite(csvData);
     const fileId = uploadResponse.$id;
-    res.send(`http://localhost:9000/downloadcsv?fileId=${fileId}`);
+    res.send(
+      `https://mongo-manager-backend.vercel.app/downloadcsv?fileId=${fileId}`,
+    );
   } catch (error) {
     return res.status(500).json({
       message: `some error occurred while executing ERROR_MESSAGE:${error}`,
