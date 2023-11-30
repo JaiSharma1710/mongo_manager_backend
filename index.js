@@ -59,8 +59,19 @@ app.post('/runQuery', async (req, res) => {
       });
     }
 
+    if (query.includes('ISODate')) {
+      return res.status(500).json({
+        message: 'replace "ISODate" with "new Date"',
+      });
+    }
+
     finalQuery = query.trim();
     const data = await eval(`${finalQuery}.toArray()`);
+
+    if (!data.length) {
+      return res.status(500).send({ message: 'no documents found' });
+    }
+
     return res.json({ data });
   } catch (error) {
     return res.status(500).json({
